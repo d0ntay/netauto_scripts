@@ -1,0 +1,15 @@
+---
+devices:
+  - name: r1
+    host: 192.168.60.170
+    username: admin
+    password: Passw0rd123$
+    device_type: cisco_ios
+    lo0: 10.10.10.1
+
+  - name: r2
+    host: 192.168.60.171
+    username: admin
+    password: Passw0rd123$
+    device_type: cisco_ios
+    lo0: 10.10.10.2

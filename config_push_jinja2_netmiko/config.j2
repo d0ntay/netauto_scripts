@@ -1,0 +1,9 @@
+hostname {{ device.name }}
+
+{% for interface in interfaces %}
+interface {{ interface.name }}
+    description {{ interface.description }}
+    no shutdown
+interface loopback 0
+    ip address {{ device.lo0 }} 255.255.255.0
+{% endfor %}

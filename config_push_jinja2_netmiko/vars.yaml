@@ -1,0 +1,7 @@
+---
+interfaces:
+  - name: g0/0
+    description: Connection to cloud0
+
+  - name: g1/0/1
+    description: p2p connection

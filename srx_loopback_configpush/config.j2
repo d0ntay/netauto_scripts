@@ -1,0 +1,3 @@
+set system host-name {{device.name}}
+set interfaces lo0 unit 0 family inet address {{device.loopback}}/32
+    set interfaces lo0 description "Poll from this interface"

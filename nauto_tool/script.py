@@ -77,12 +77,16 @@ def cisco_device(device_name, conn, config_lines):
     generate_output(device_name, pre_conf, post_conf, output)
     print(f"Finished {device_name}")
 
+# Appends OUTPUTS map with data received from each device
+
 def generate_output(device_name, pre_conf, post_conf, output):
     OUTPUTS[device_name] = {
         "original_config" : pre_conf,
         "new_config" : post_conf,
         "output" : output,       
     }
+
+# Creates the output file with the contents of the OUTPUTS map
 
 def create_output():
     now = datetime.now()

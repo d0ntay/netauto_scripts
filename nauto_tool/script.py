@@ -1,4 +1,3 @@
-import json
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from netmiko import ConnectHandler
@@ -44,20 +43,32 @@ def loader(data):
             print(f"Error on {device["name"]} | {device["host"]} : {e}")
 
 def juniper_device(device_name ,conn, config_lines):
+    pre_conf = conn.send_command("show configuration")
     output = conn.send_config_set(config_lines)
     conn.commit()
     conn.exit_config_mode()
+    post_conf = conn.send_command("show configuration")
     conn.disconnect()
-    OUTPUTS[device_name] = output 
+    OUTPUTS[device_name] = {
+        "original_config" : pre_conf,
+        "new_config" : post_conf,
+        "output" : output,
+    }
     print(f"Finished {device_name}")
 
 def cisco_device(device_name, conn, config_lines):
     conn.enable()
+    pre_conf = conn.send_command("show run")
     output = conn.send_config_set(config_lines)
     conn.set_base_prompt()
     conn.save_config()
+    post_conf = conn.send_command("show run")
     conn.disconnect()
-    OUTPUTS[device_name] = output
+    OUTPUTS[device_name] = {
+        "original_config" : pre_conf,
+        "new_config" : post_conf,
+        "output" : output,       
+    }
     print(f"Finished {device_name}")
 
 def net_connect(config_lines, device_type, device_host, device_name, device_username, device_password):
@@ -104,7 +115,7 @@ def main():
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"./output/output-{timestamp}.txt"
     with open(filename, "w") as f:
-        json.dump(OUTPUTS, f, indent=2)
+        yaml.dump(OUTPUTS, f)
 
 if __name__ == "__main__":
     main()

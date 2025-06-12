@@ -13,8 +13,8 @@ PASSWORD = getpass.getpass()
 # update template map with more tempplates when a new vendor is needed
 #
 # Currently supported vendors:
-#   Cisco
-#   Juniper
+#   - Cisco
+#   - Juniper
 
 TEMPLATE_MAP = {
     "juniper": "juniper_config.j2",

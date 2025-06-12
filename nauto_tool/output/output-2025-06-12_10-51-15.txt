@@ -1,9 +1,0 @@
-{
-  "OOB-01": "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-01#set interfaces lo0 unit 0 family inet address 192.168.60.200/32 \n\n[edit]\nnauto@OOB-01# exit configuration-mode \nExiting configuration mode\n\nnauto@OOB-01> ",
-  "OOB-02": "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-02#set interfaces lo0 unit 0 family inet address 192.168.60.201/32 \n\n[edit]\nnauto@OOB-02# exit configuration-mode \nExiting configuration mode\n\nnauto@OOB-02> ",
-  "OOB-03": "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-03#set interfaces lo0 unit 0 family inet address 192.168.60.202/32 \n\n[edit]\nnauto@OOB-03# exit configuration-mode \nExiting configuration mode\n\nnauto@OOB-03> ",
-  "OOB-04": "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-04#set interfaces lo0 unit 0 family inet address 192.168.60.203/32 \n\n[edit]\nnauto@OOB-04# exit configuration-mode \nExiting configuration mode\n\nnauto@OOB-04> ",
-  "OOB-05": "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-05#set interfaces lo0 unit 0 family inet address 192.168.60.204/32 \n\n[edit]\nnauto@OOB-05# exit configuration-mode \nExiting configuration mode\n\nnauto@OOB-05> ",
-  "r1": "configure terminal\nEnter configuration commands, one per line.  End with CNTL/Z.\nr1(config)#interface loopback 0\nr1(config-if)#    ip address 192.168.60.205 255.255.255.255\nr1(config-if)#end\nr1#",
-  "r2": "configure terminal\nEnter configuration commands, one per line.  End with CNTL/Z.\nr2(config)#interface loopback 0\nr2(config-if)#    ip address 192.168.60.206 255.255.255.255\nr2(config-if)#end\nr2#"
-}

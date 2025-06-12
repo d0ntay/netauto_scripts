@@ -1,5 +1,5 @@
 OOB-01:
-  new_config: "## Last commit: 2025-06-12 21:51:55 UTC by nauto\nversion 23.2R2.21;\n\
+  new_config: "## Last commit: 2025-06-13 00:58:55 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-01;\n    root-authentication {\n        encrypted-password\
     \ \"$6$S4vBJxIv$1F0pfzi3tKxjvSsvM9uhzLWNl9.pMZhoVdaqNCnErp2mWfmo0yEalGHMa8EdaHIFLFfzJLFFZwQOR2YIvVea61\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -43,7 +43,7 @@ OOB-01:
     \        }\n        }\n    }\n    lo0 {\n        description \"Poll from this\
     \ interface\";\n        unit 0 {\n            family inet {\n                address\
     \ 192.168.60.200/32;\n            }\n        }\n    }\n}\n"
-  original_config: "## Last commit: 2025-06-12 21:50:28 UTC by nauto\nversion 23.2R2.21;\n\
+  original_config: "## Last commit: 2025-06-13 00:55:37 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-01;\n    root-authentication {\n        encrypted-password\
     \ \"$6$S4vBJxIv$1F0pfzi3tKxjvSsvM9uhzLWNl9.pMZhoVdaqNCnErp2mWfmo0yEalGHMa8EdaHIFLFfzJLFFZwQOR2YIvVea61\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -91,7 +91,7 @@ OOB-01:
     \ lo0 unit 0 family inet address 192.168.60.200/32 \n\n[edit]\nnauto@OOB-01# exit\
     \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-01> "
 OOB-02:
-  new_config: "## Last commit: 2025-06-12 21:51:56 UTC by nauto\nversion 23.2R2.21;\n\
+  new_config: "## Last commit: 2025-06-13 00:58:56 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-02;\n    root-authentication {\n        encrypted-password\
     \ \"$6$4I2cPnJN$Qgcyzet9Y02wAw7T93tlZ5qWl8hZpJUabpm7dbMG6DlCKgLtYJJTzfewa20kJvWn4y9e0ZbNHwwiY/2hzhalf.\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -135,7 +135,7 @@ OOB-02:
     \        }\n        }\n    }\n    lo0 {\n        description \"Poll from this\
     \ interface\";\n        unit 0 {\n            family inet {\n                address\
     \ 192.168.60.201/32;\n            }\n        }\n    }\n}\n"
-  original_config: "## Last commit: 2025-06-12 21:50:29 UTC by nauto\nversion 23.2R2.21;\n\
+  original_config: "## Last commit: 2025-06-13 00:55:38 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-02;\n    root-authentication {\n        encrypted-password\
     \ \"$6$4I2cPnJN$Qgcyzet9Y02wAw7T93tlZ5qWl8hZpJUabpm7dbMG6DlCKgLtYJJTzfewa20kJvWn4y9e0ZbNHwwiY/2hzhalf.\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -183,7 +183,7 @@ OOB-02:
     \ lo0 unit 0 family inet address 192.168.60.201/32 \n\n[edit]\nnauto@OOB-02# exit\
     \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-02> "
 OOB-03:
-  new_config: "## Last commit: 2025-06-12 21:51:58 UTC by nauto\nversion 23.2R2.21;\n\
+  new_config: "## Last commit: 2025-06-13 00:58:58 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-03;\n    root-authentication {\n        encrypted-password\
     \ \"$6$D1wcYG23$/fNeYgUx/YWrQqB.89GkoXhgka7oFOINYa.5/qKwyZNcu2JLxwUleMfN8aSB7taYhiWVx0hHzV2F4TjieRwP91\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -227,7 +227,7 @@ OOB-03:
     \        }\n        }\n    }\n    lo0 {\n        description \"Poll from this\
     \ interface\";\n        unit 0 {\n            family inet {\n                address\
     \ 192.168.60.202/32;\n            }\n        }\n    }\n}\n"
-  original_config: "## Last commit: 2025-06-12 21:50:31 UTC by nauto\nversion 23.2R2.21;\n\
+  original_config: "## Last commit: 2025-06-13 00:55:39 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-03;\n    root-authentication {\n        encrypted-password\
     \ \"$6$D1wcYG23$/fNeYgUx/YWrQqB.89GkoXhgka7oFOINYa.5/qKwyZNcu2JLxwUleMfN8aSB7taYhiWVx0hHzV2F4TjieRwP91\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -275,7 +275,7 @@ OOB-03:
     \ lo0 unit 0 family inet address 192.168.60.202/32 \n\n[edit]\nnauto@OOB-03# exit\
     \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-03> "
 OOB-04:
-  new_config: "## Last commit: 2025-06-12 21:51:59 UTC by nauto\nversion 23.2R2.21;\n\
+  new_config: "## Last commit: 2025-06-13 00:58:59 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-04;\n    root-authentication {\n        encrypted-password\
     \ \"$6$eqRz7TAn$IFjCSgSZGPRyw/Xgnkw4BiRkPRL1h7/ODch7nY9nQd6u34qwhzrAXuIok/uD/QJ08.Mojb6/fLhJPsGzECNoI0\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -319,7 +319,7 @@ OOB-04:
     \        }\n        }\n    }\n    lo0 {\n        description \"Poll from this\
     \ interface\";\n        unit 0 {\n            family inet {\n                address\
     \ 192.168.60.203/32;\n            }\n        }\n    }\n}\n"
-  original_config: "## Last commit: 2025-06-12 21:50:32 UTC by nauto\nversion 23.2R2.21;\n\
+  original_config: "## Last commit: 2025-06-13 00:55:40 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-04;\n    root-authentication {\n        encrypted-password\
     \ \"$6$eqRz7TAn$IFjCSgSZGPRyw/Xgnkw4BiRkPRL1h7/ODch7nY9nQd6u34qwhzrAXuIok/uD/QJ08.Mojb6/fLhJPsGzECNoI0\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -367,7 +367,7 @@ OOB-04:
     \ lo0 unit 0 family inet address 192.168.60.203/32 \n\n[edit]\nnauto@OOB-04# exit\
     \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-04> "
 OOB-05:
-  new_config: "## Last commit: 2025-06-12 21:52:00 UTC by nauto\nversion 23.2R2.21;\n\
+  new_config: "## Last commit: 2025-06-13 00:59:00 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-05;\n    root-authentication {\n        encrypted-password\
     \ \"$6$5vTxZeXK$CMrPARg4eGuEvooaDDrde9vY835PX06o3G8PxJpIlWEMrnfv7/ecQ2HETPZ8bO/q4J.irS7c6/7bhqUz/auy41\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -411,7 +411,7 @@ OOB-05:
     \        }\n        }\n    }\n    lo0 {\n        description \"Poll from this\
     \ interface\";\n        unit 0 {\n            family inet {\n                address\
     \ 192.168.60.204/32;\n            }\n        }\n    }\n}\n"
-  original_config: "## Last commit: 2025-06-12 21:50:33 UTC by nauto\nversion 23.2R2.21;\n\
+  original_config: "## Last commit: 2025-06-13 00:55:42 UTC by nauto\nversion 23.2R2.21;\n\
     system {\n    host-name OOB-05;\n    root-authentication {\n        encrypted-password\
     \ \"$6$5vTxZeXK$CMrPARg4eGuEvooaDDrde9vY835PX06o3G8PxJpIlWEMrnfv7/ecQ2HETPZ8bO/q4J.irS7c6/7bhqUz/auy41\"\
     ; ## SECRET-DATA\n    }\n    login {\n        user nauto {\n            uid 2000;\n\
@@ -460,7 +460,7 @@ OOB-05:
     \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-05> "
 r1:
   new_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n!\n\
-    ! Last configuration change at 21:52:01 UTC Thu Jun 12 2025 by nauto\n!\nversion\
+    ! Last configuration change at 00:59:01 UTC Fri Jun 13 2025 by nauto\n!\nversion\
     \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
     \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r1\n!\n!\nvrf\
     \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
@@ -561,7 +561,7 @@ r1:
     \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
     \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
   original_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n\
-    !\n! Last configuration change at 21:50:34 UTC Thu Jun 12 2025 by nauto\n!\nversion\
+    !\n! Last configuration change at 00:55:43 UTC Fri Jun 13 2025 by nauto\n!\nversion\
     \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
     \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r1\n!\n!\nvrf\
     \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
@@ -674,7 +674,7 @@ r1:
     r1#'
 r2:
   new_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n!\n\
-    ! Last configuration change at 21:52:03 UTC Thu Jun 12 2025 by nauto\n!\nversion\
+    ! Last configuration change at 00:59:03 UTC Fri Jun 13 2025 by nauto\n!\nversion\
     \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
     \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r2\n!\n!\nvrf\
     \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
@@ -775,7 +775,7 @@ r2:
     \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
     \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
   original_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n\
-    !\n! Last configuration change at 21:50:36 UTC Thu Jun 12 2025 by nauto\n!\nversion\
+    !\n! Last configuration change at 00:55:45 UTC Fri Jun 13 2025 by nauto\n!\nversion\
     \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
     \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r2\n!\n!\nvrf\
     \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\

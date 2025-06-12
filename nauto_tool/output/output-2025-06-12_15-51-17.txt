@@ -1,0 +1,1820 @@
+OOB-01:
+  original_config: |
+    ## Last commit: 2025-06-13 00:49:48 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-01;
+        root-authentication {
+            encrypted-password "$6$S4vBJxIv$1F0pfzi3tKxjvSsvM9uhzLWNl9.pMZhoVdaqNCnErp2mWfmo0yEalGHMa8EdaHIFLFfzJLFFZwQOR2YIvVea61"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$HGmVJD4m$hV/tBXucwsiFIbutTvWI0q66UJ8cvpTah9TYFSg63wBjma1OdO1LgKF3Soc4CsuOC/vadFNWByHR9i7ddhHs6/"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.200/32;
+                }
+            }
+        }
+    }
+  new_config: |
+    ## Last commit: 2025-06-13 00:50:29 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-01;
+        root-authentication {
+            encrypted-password "$6$S4vBJxIv$1F0pfzi3tKxjvSsvM9uhzLWNl9.pMZhoVdaqNCnErp2mWfmo0yEalGHMa8EdaHIFLFfzJLFFZwQOR2YIvVea61"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$HGmVJD4m$hV/tBXucwsiFIbutTvWI0q66UJ8cvpTah9TYFSg63wBjma1OdO1LgKF3Soc4CsuOC/vadFNWByHR9i7ddhHs6/"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.200/32;
+                }
+            }
+        }
+    }
+  output: "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-01#set interfaces\
+    \ lo0 unit 0 family inet address 192.168.60.200/32 \n\n[edit]\nnauto@OOB-01# exit\
+    \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-01> "
+OOB-02:
+  original_config: |
+    ## Last commit: 2025-06-13 00:49:50 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-02;
+        root-authentication {
+            encrypted-password "$6$4I2cPnJN$Qgcyzet9Y02wAw7T93tlZ5qWl8hZpJUabpm7dbMG6DlCKgLtYJJTzfewa20kJvWn4y9e0ZbNHwwiY/2hzhalf."; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$ZLQnW1Gr$LfCLgX7oGODsLx31iqFsEU/jD8LoHNZ1/9PkKOyHuMQwh67ezuNJNJzCoqh655YJZuZV3x8rUbjCNMVwrWZHq1"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.201/32;
+                }
+            }
+        }
+    }
+  new_config: |
+    ## Last commit: 2025-06-13 00:50:30 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-02;
+        root-authentication {
+            encrypted-password "$6$4I2cPnJN$Qgcyzet9Y02wAw7T93tlZ5qWl8hZpJUabpm7dbMG6DlCKgLtYJJTzfewa20kJvWn4y9e0ZbNHwwiY/2hzhalf."; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$ZLQnW1Gr$LfCLgX7oGODsLx31iqFsEU/jD8LoHNZ1/9PkKOyHuMQwh67ezuNJNJzCoqh655YJZuZV3x8rUbjCNMVwrWZHq1"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.201/32;
+                }
+            }
+        }
+    }
+  output: "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-02#set interfaces\
+    \ lo0 unit 0 family inet address 192.168.60.201/32 \n\n[edit]\nnauto@OOB-02# exit\
+    \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-02> "
+OOB-03:
+  original_config: |
+    ## Last commit: 2025-06-13 00:49:51 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-03;
+        root-authentication {
+            encrypted-password "$6$D1wcYG23$/fNeYgUx/YWrQqB.89GkoXhgka7oFOINYa.5/qKwyZNcu2JLxwUleMfN8aSB7taYhiWVx0hHzV2F4TjieRwP91"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$emM/nhd5$sA2w4VQhTms0a.iDGH5fCI3gT1l.PQ9GUOBwZbSKkGTCzL3EMv/j3RoQPT8RgtMFLvHLcNSC1Ediiv3IVxEAA."; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.202/32;
+                }
+            }
+        }
+    }
+  new_config: |
+    ## Last commit: 2025-06-13 00:50:31 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-03;
+        root-authentication {
+            encrypted-password "$6$D1wcYG23$/fNeYgUx/YWrQqB.89GkoXhgka7oFOINYa.5/qKwyZNcu2JLxwUleMfN8aSB7taYhiWVx0hHzV2F4TjieRwP91"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$emM/nhd5$sA2w4VQhTms0a.iDGH5fCI3gT1l.PQ9GUOBwZbSKkGTCzL3EMv/j3RoQPT8RgtMFLvHLcNSC1Ediiv3IVxEAA."; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.202/32;
+                }
+            }
+        }
+    }
+  output: "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-03#set interfaces\
+    \ lo0 unit 0 family inet address 192.168.60.202/32 \n\n[edit]\nnauto@OOB-03# exit\
+    \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-03> "
+OOB-04:
+  original_config: |
+    ## Last commit: 2025-06-13 00:49:52 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-04;
+        root-authentication {
+            encrypted-password "$6$eqRz7TAn$IFjCSgSZGPRyw/Xgnkw4BiRkPRL1h7/ODch7nY9nQd6u34qwhzrAXuIok/uD/QJ08.Mojb6/fLhJPsGzECNoI0"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$cmESqfTV$J9SntofQSG8.xZnmhntVbzj4hEX2aOJj4cZ8l4UWyw8ic/T0mTxPQyxAcd04xZ.Mq2AmKj2hvlwf/CWV809SI0"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.203/32;
+                }
+            }
+        }
+    }
+  new_config: |
+    ## Last commit: 2025-06-13 00:50:32 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-04;
+        root-authentication {
+            encrypted-password "$6$eqRz7TAn$IFjCSgSZGPRyw/Xgnkw4BiRkPRL1h7/ODch7nY9nQd6u34qwhzrAXuIok/uD/QJ08.Mojb6/fLhJPsGzECNoI0"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$cmESqfTV$J9SntofQSG8.xZnmhntVbzj4hEX2aOJj4cZ8l4UWyw8ic/T0mTxPQyxAcd04xZ.Mq2AmKj2hvlwf/CWV809SI0"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.203/32;
+                }
+            }
+        }
+    }
+  output: "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-04#set interfaces\
+    \ lo0 unit 0 family inet address 192.168.60.203/32 \n\n[edit]\nnauto@OOB-04# exit\
+    \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-04> "
+OOB-05:
+  original_config: |
+    ## Last commit: 2025-06-13 00:49:53 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-05;
+        root-authentication {
+            encrypted-password "$6$5vTxZeXK$CMrPARg4eGuEvooaDDrde9vY835PX06o3G8PxJpIlWEMrnfv7/ecQ2HETPZ8bO/q4J.irS7c6/7bhqUz/auy41"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$EFlAJD/w$pIdt.h4zJt5xKtnuXMY54t05.Nm4aBXcaaUGaMx4Jedfmy/1MaxWW0owerwLAhob5kitFvrqMkk5Mtfe9Ogf30"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.204/32;
+                }
+            }
+        }
+    }
+  new_config: |
+    ## Last commit: 2025-06-13 00:50:33 UTC by nauto
+    version 23.2R2.21;
+    system {
+        host-name OOB-05;
+        root-authentication {
+            encrypted-password "$6$5vTxZeXK$CMrPARg4eGuEvooaDDrde9vY835PX06o3G8PxJpIlWEMrnfv7/ecQ2HETPZ8bO/q4J.irS7c6/7bhqUz/auy41"; ## SECRET-DATA
+        }
+        login {
+            user nauto {
+                uid 2000;
+                class super-user;
+                authentication {
+                    encrypted-password "$6$EFlAJD/w$pIdt.h4zJt5xKtnuXMY54t05.Nm4aBXcaaUGaMx4Jedfmy/1MaxWW0owerwLAhob5kitFvrqMkk5Mtfe9Ogf30"; ## SECRET-DATA
+                }
+            }
+        }
+        services {
+            ssh;
+            web-management {
+                http {
+                    interface fxp0.0;
+                }
+                https {
+                    system-generated-certificate;
+                    interface fxp0.0;
+                }
+            }
+        }
+        syslog {
+            file interactive-commands {
+                interactive-commands any;
+            }
+            file messages {
+                any any;
+                authorization info;
+            }
+        }
+        license {
+            autoupdate {
+                url https://ae1.juniper.net/junos/key_retrieval;
+            }
+        }
+    }
+    security {
+        pki {
+            ca-profile ISRG_Root_X1 {
+                ca-identity ISRG_Root_X1;
+                pre-load;
+            }
+            ca-profile Lets_Encrypt {
+                ca-identity Lets_Encrypt;
+                enrollment {
+                    url https://acme-v02.api.letsencrypt.org/directory;
+                }
+            }
+        }
+        screen {
+            ids-option untrust-screen {
+                icmp {
+                    ping-death;
+                }
+                ip {
+                    source-route-option;
+                    tear-drop;
+                }
+                tcp {
+                    syn-flood {
+                        alarm-threshold 1024;
+                        attack-threshold 200;
+                        source-threshold 1024;
+                        destination-threshold 2048;
+                        queue-size 2000; ## Warning: 'queue-size' is deprecated
+                        timeout 20;
+                    }
+                    land;
+                }
+            }
+        }
+        policies {
+            from-zone trust to-zone trust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone trust to-zone untrust {
+                policy default-permit {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            pre-id-default-policy {
+                then {
+                    log {
+                        session-close;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone trust {
+                tcp-rst;
+            }
+            security-zone untrust {
+                screen untrust-screen;
+            }
+        }
+    }
+    interfaces {
+        fxp0 {
+            unit 0 {
+                family inet {
+                    dhcp;
+                }
+            }
+        }
+        lo0 {
+            description "Poll from this interface";
+            unit 0 {
+                family inet {
+                    address 192.168.60.204/32;
+                }
+            }
+        }
+    }
+  output: "configure \nEntering configuration mode\n\n[edit]\nnauto@OOB-05#set interfaces\
+    \ lo0 unit 0 family inet address 192.168.60.204/32 \n\n[edit]\nnauto@OOB-05# exit\
+    \ configuration-mode \nExiting configuration mode\n\nnauto@OOB-05> "
+r1:
+  original_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n\
+    !\n! Last configuration change at 00:49:54 UTC Fri Jun 13 2025 by nauto\n!\nversion\
+    \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
+    \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r1\n!\n!\nvrf\
+    \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
+    \ ipv6\n exit-address-family\n!\nno aaa new-model\nswitch 1 provision c9kv-uadp-8p\n\
+    !\n!\n!\n!\n!\nip domain name dantelab.local\n!\n!\n!\nlogin on-success log\n\
+    vtp version 1\n!\n!\n!\n!\n!\n!\ncrypto pki trustpoint SLA-TrustPoint\n enrollment\
+    \ pkcs12\n revocation-check crl\n hash sha256\n!\ncrypto pki trustpoint TP-self-signed-3538752682\n\
+    \ enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-3538752682\n\
+    \ revocation-check none\n rsakeypair TP-self-signed-3538752682\n hash sha256\n\
+    !\n!\ncrypto pki certificate chain SLA-TrustPoint\n certificate ca 01\n  30820321\
+    \ 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 \n  32310E30\
+    \ 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 \n  6F204C69\
+    \ 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 \n  3834375A\
+    \ 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 \n  43697363\
+    \ 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 \n  526F6F74\
+    \ 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \n  82010A02\
+    \ 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \n  CBB4C798\
+    \ 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 \n  1C394D78\
+    \ 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE \n  4AA4E80D\
+    \ DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \n  7390A3EB\
+    \ 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 \n  68E69491\
+    \ 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 \n  C7479096\
+    \ B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \n  C55F0D76\
+    \ 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \n  DFC7C6CF\
+    \ 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \n  06300F06\
+    \ 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 \n  4B3D31E5\
+    \ 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \n  03820101\
+    \ 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 \n  604EDCDE\
+    \ FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B \n  D98987BF\
+    \ E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 \n  467A3DF4\
+    \ 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \n  7CA7B7E6\
+    \ C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \n  5FB0DA06\
+    \ B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \n  80DDCD16\
+    \ D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \n  418616A9\
+    \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 \n  D697DF7F\
+    \ 28\n  \tquit\ncrypto pki certificate chain TP-self-signed-3538752682\n certificate\
+    \ self-signed 01\n  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
+    \ 0B050030 \n  31312F30 2D060355 04030C26 494F532D 53656C66 2D536967 6E65642D\
+    \ 43657274 \n  69666963 6174652D 33353338 37353236 3832301E 170D3235 30363131\
+    \ 30313032 \n  35385A17 0D333530 36313130 31303235 385A3031 312F302D 06035504\
+    \ 030C2649 \n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33\
+    \ 35333837 \n  35323638 32308201 22300D06 092A8648 86F70D01 01010500 0382010F\
+    \ 00308201 \n  0A028201 0100A79E 17A55745 DF08D1E1 598C8F08 013F0310 BBE98A8A\
+    \ 525F7B71 \n  1B19E6E8 EB6B3786 F4647336 89020293 346AFE80 2BB9239D 200573FC\
+    \ 11204E57 \n  B43C8CE6 FF717CBE 38780E9C 52D4C292 AEC4ECF2 9B8A438F 507D9D6D\
+    \ CB43C270 \n  807BCE94 E52A05C7 78036B3B 87D7FC89 E26E3E16 D538056D A8CE6448\
+    \ 8A9EDFFD \n  EBA28431 D7EEDDCE A0A898D6 CA7B678C 94C957C8 635656FE 2863F34D\
+    \ FB284712 \n  F9C5A4DC BF34D19F 53CBACE0 64A1B77F 716FD220 2509F997 FB12564F\
+    \ 9852024D \n  3B3A73D7 1EB585AA 4013A393 BBB7C8C9 215EDCB0 5C565274 3DE36079\
+    \ 0EB4911A \n  D45D996D 701459CC 8A0BFEA4 79492BA8 AFCC2EAC 12ADB6F1 EF480663\
+    \ 638316E9 \n  7DDD54A7 29430203 010001A3 53305130 1D060355 1D0E0416 04146A9F\
+    \ 438EAFF6 \n  BF0C6683 30F9A307 3D68EF74 0FA1301F 0603551D 23041830 1680146A\
+    \ 9F438EAF \n  F6BF0C66 8330F9A3 073D68EF 740FA130 0F060355 1D130101 FF040530\
+    \ 030101FF \n  300D0609 2A864886 F70D0101 0B050003 82010100 2D4283C2 27E7E2DA\
+    \ C92FFE7E \n  22506AFA CEBD3427 8D1D92B5 1233D7C5 724EEDD2 0568E33A D64A6ACF\
+    \ D49B4A44 \n  6176D66A D2CB90C6 49181578 C62EBBD6 519318B5 CCFF48AB 71D79FF3\
+    \ 11DF0220 \n  8CE3D49C 0DC2CA48 6A813C6E 4078E7D4 ACB33090 60B14C34 7A8272CE\
+    \ 2D6177BE \n  5DA0A4A3 3611BC89 546EE956 B77E7385 AE1CEEFC 892B7E16 A48D3E6D\
+    \ D832C452 \n  A7A31684 3915F51A BC801FB1 054692D9 862E2982 FFDC9437 82CF729F\
+    \ D296586D \n  E211C528 4BC2F218 9F657CB3 95292AA0 9C47B35B E3981DE7 C1C14356\
+    \ C68B6757 \n  DF9B76A6 42118174 4856BDC8 64E45D0A 2558B35F 05618B91 A798B2E9\
+    \ 67435EF3 \n  6F49C544 CA9CA1A3 F7FC50C4 9A9F3D10 200EA4E7\n  \tquit\n!\nmemory\
+    \ free low-watermark processor 74862\n!\ndiagnostic bootup level minimal\n!\n\
+    spanning-tree mode rapid-pvst\nspanning-tree extend system-id\n!\n!\n!\nusername\
+    \ admin privilege 15 secret 9 $9$.Ng4RUiinj5y1.$0atpOwlcmTWYo.1hQ9TrKMhlDI4sX9TV/gMN7TrLu1U\n\
+    username nauto privilege 15 secret 9 $9$BIcrWx7MIYkuGU$6zlqpm02bYVEBFXTDdPodmqigaZWS8GWcu7iRJLlgf.\n\
+    !\nredundancy\n mode sso\n!\n!\n!\n!\n!\n!\nclass-map match-any system-cpp-police-topology-control\n\
+    \  description Topology control\nclass-map match-any system-cpp-police-sw-forward\n\
+    \  description Sw forwarding, L2 LVX data, LOGGING\nclass-map match-any system-cpp-default\n\
+    \  description EWLC control, EWLC data, Inter FED \nclass-map match-any system-cpp-police-sys-data\n\
+    \  description Learning cache ovfl, High Rate App, Exception, EGR Exception, NFL\
+    \ SAMPLED DATA, RPF Failed\nclass-map match-any system-cpp-police-punt-webauth\n\
+    \  description Punt Webauth\nclass-map match-any system-cpp-police-l2lvx-control\n\
+    \  description L2 LVX control packets\nclass-map match-any system-cpp-police-forus\n\
+    \  description Forus Address resolution and Forus traffic\nclass-map match-any\
+    \ system-cpp-police-multicast-end-station\n  description MCAST END STATION\nclass-map\
+    \ match-any system-cpp-police-multicast\n  description Transit Traffic and MCAST\
+    \ Data\nclass-map match-any system-cpp-police-l2-control\n  description L2 control\n\
+    class-map match-any system-cpp-police-dot1x-auth\n  description DOT1X Auth\nclass-map\
+    \ match-any system-cpp-police-data\n  description ICMP redirect, ICMP_GEN and\
+    \ BROADCAST\nclass-map match-any system-cpp-police-stackwise-virt-control\n  description\
+    \ Stackwise Virtual\nclass-map match-any non-client-nrt-class\nclass-map match-any\
+    \ system-cpp-police-routing-control\n  description Routing control and Low Latency\n\
+    class-map match-any system-cpp-police-protocol-snooping\n  description Protocol\
+    \ snooping\nclass-map match-any system-cpp-police-dhcp-snooping\n  description\
+    \ DHCP snooping\nclass-map match-any system-cpp-police-system-critical\n  description\
+    \ System Critical and Gold Pkt\n!\npolicy-map system-cpp-policy\n!\n! \n!\n!\n\
+    !\n!\n!\n!\n!\n!\n!\ninterface Loopback0\n ip address 192.168.60.205 255.255.255.255\n\
+    !\ninterface GigabitEthernet0/0\n description Connection to cloud0\n vrf forwarding\
+    \ Mgmt-vrf\n ip address dhcp\n negotiation auto\n!\ninterface GigabitEthernet1/0/1\n\
+    \ description p2p connection\n!\ninterface GigabitEthernet1/0/2\n!\ninterface\
+    \ GigabitEthernet1/0/3\n!\ninterface GigabitEthernet1/0/4\n!\ninterface GigabitEthernet1/0/5\n\
+    !\ninterface GigabitEthernet1/0/6\n!\ninterface GigabitEthernet1/0/7\n!\ninterface\
+    \ GigabitEthernet1/0/8\n!\ninterface Vlan1\n no ip address\n shutdown\n!\nip forward-protocol\
+    \ nd\nip tcp mss 1280\nip tcp window-size 212000\nip http server\nip http authentication\
+    \ local\nip http secure-server\nip ssh bulk-mode 131072\n!\n!\n!\n!\ncontrol-plane\n\
+    \ service-policy input system-cpp-policy\n!\n!\nline con 0\n stopbits 1\nline\
+    \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
+    \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
+  new_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n!\n\
+    ! Last configuration change at 00:50:34 UTC Fri Jun 13 2025 by nauto\n!\nversion\
+    \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
+    \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r1\n!\n!\nvrf\
+    \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
+    \ ipv6\n exit-address-family\n!\nno aaa new-model\nswitch 1 provision c9kv-uadp-8p\n\
+    !\n!\n!\n!\n!\nip domain name dantelab.local\n!\n!\n!\nlogin on-success log\n\
+    vtp version 1\n!\n!\n!\n!\n!\n!\ncrypto pki trustpoint SLA-TrustPoint\n enrollment\
+    \ pkcs12\n revocation-check crl\n hash sha256\n!\ncrypto pki trustpoint TP-self-signed-3538752682\n\
+    \ enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-3538752682\n\
+    \ revocation-check none\n rsakeypair TP-self-signed-3538752682\n hash sha256\n\
+    !\n!\ncrypto pki certificate chain SLA-TrustPoint\n certificate ca 01\n  30820321\
+    \ 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 \n  32310E30\
+    \ 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 \n  6F204C69\
+    \ 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 \n  3834375A\
+    \ 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 \n  43697363\
+    \ 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 \n  526F6F74\
+    \ 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \n  82010A02\
+    \ 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \n  CBB4C798\
+    \ 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 \n  1C394D78\
+    \ 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE \n  4AA4E80D\
+    \ DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \n  7390A3EB\
+    \ 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 \n  68E69491\
+    \ 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 \n  C7479096\
+    \ B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \n  C55F0D76\
+    \ 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \n  DFC7C6CF\
+    \ 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \n  06300F06\
+    \ 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 \n  4B3D31E5\
+    \ 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \n  03820101\
+    \ 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 \n  604EDCDE\
+    \ FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B \n  D98987BF\
+    \ E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 \n  467A3DF4\
+    \ 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \n  7CA7B7E6\
+    \ C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \n  5FB0DA06\
+    \ B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \n  80DDCD16\
+    \ D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \n  418616A9\
+    \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 \n  D697DF7F\
+    \ 28\n  \tquit\ncrypto pki certificate chain TP-self-signed-3538752682\n certificate\
+    \ self-signed 01\n  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
+    \ 0B050030 \n  31312F30 2D060355 04030C26 494F532D 53656C66 2D536967 6E65642D\
+    \ 43657274 \n  69666963 6174652D 33353338 37353236 3832301E 170D3235 30363131\
+    \ 30313032 \n  35385A17 0D333530 36313130 31303235 385A3031 312F302D 06035504\
+    \ 030C2649 \n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33\
+    \ 35333837 \n  35323638 32308201 22300D06 092A8648 86F70D01 01010500 0382010F\
+    \ 00308201 \n  0A028201 0100A79E 17A55745 DF08D1E1 598C8F08 013F0310 BBE98A8A\
+    \ 525F7B71 \n  1B19E6E8 EB6B3786 F4647336 89020293 346AFE80 2BB9239D 200573FC\
+    \ 11204E57 \n  B43C8CE6 FF717CBE 38780E9C 52D4C292 AEC4ECF2 9B8A438F 507D9D6D\
+    \ CB43C270 \n  807BCE94 E52A05C7 78036B3B 87D7FC89 E26E3E16 D538056D A8CE6448\
+    \ 8A9EDFFD \n  EBA28431 D7EEDDCE A0A898D6 CA7B678C 94C957C8 635656FE 2863F34D\
+    \ FB284712 \n  F9C5A4DC BF34D19F 53CBACE0 64A1B77F 716FD220 2509F997 FB12564F\
+    \ 9852024D \n  3B3A73D7 1EB585AA 4013A393 BBB7C8C9 215EDCB0 5C565274 3DE36079\
+    \ 0EB4911A \n  D45D996D 701459CC 8A0BFEA4 79492BA8 AFCC2EAC 12ADB6F1 EF480663\
+    \ 638316E9 \n  7DDD54A7 29430203 010001A3 53305130 1D060355 1D0E0416 04146A9F\
+    \ 438EAFF6 \n  BF0C6683 30F9A307 3D68EF74 0FA1301F 0603551D 23041830 1680146A\
+    \ 9F438EAF \n  F6BF0C66 8330F9A3 073D68EF 740FA130 0F060355 1D130101 FF040530\
+    \ 030101FF \n  300D0609 2A864886 F70D0101 0B050003 82010100 2D4283C2 27E7E2DA\
+    \ C92FFE7E \n  22506AFA CEBD3427 8D1D92B5 1233D7C5 724EEDD2 0568E33A D64A6ACF\
+    \ D49B4A44 \n  6176D66A D2CB90C6 49181578 C62EBBD6 519318B5 CCFF48AB 71D79FF3\
+    \ 11DF0220 \n  8CE3D49C 0DC2CA48 6A813C6E 4078E7D4 ACB33090 60B14C34 7A8272CE\
+    \ 2D6177BE \n  5DA0A4A3 3611BC89 546EE956 B77E7385 AE1CEEFC 892B7E16 A48D3E6D\
+    \ D832C452 \n  A7A31684 3915F51A BC801FB1 054692D9 862E2982 FFDC9437 82CF729F\
+    \ D296586D \n  E211C528 4BC2F218 9F657CB3 95292AA0 9C47B35B E3981DE7 C1C14356\
+    \ C68B6757 \n  DF9B76A6 42118174 4856BDC8 64E45D0A 2558B35F 05618B91 A798B2E9\
+    \ 67435EF3 \n  6F49C544 CA9CA1A3 F7FC50C4 9A9F3D10 200EA4E7\n  \tquit\n!\nmemory\
+    \ free low-watermark processor 74862\n!\ndiagnostic bootup level minimal\n!\n\
+    spanning-tree mode rapid-pvst\nspanning-tree extend system-id\n!\n!\n!\nusername\
+    \ admin privilege 15 secret 9 $9$.Ng4RUiinj5y1.$0atpOwlcmTWYo.1hQ9TrKMhlDI4sX9TV/gMN7TrLu1U\n\
+    username nauto privilege 15 secret 9 $9$BIcrWx7MIYkuGU$6zlqpm02bYVEBFXTDdPodmqigaZWS8GWcu7iRJLlgf.\n\
+    !\nredundancy\n mode sso\n!\n!\n!\n!\n!\n!\nclass-map match-any system-cpp-police-topology-control\n\
+    \  description Topology control\nclass-map match-any system-cpp-police-sw-forward\n\
+    \  description Sw forwarding, L2 LVX data, LOGGING\nclass-map match-any system-cpp-default\n\
+    \  description EWLC control, EWLC data, Inter FED \nclass-map match-any system-cpp-police-sys-data\n\
+    \  description Learning cache ovfl, High Rate App, Exception, EGR Exception, NFL\
+    \ SAMPLED DATA, RPF Failed\nclass-map match-any system-cpp-police-punt-webauth\n\
+    \  description Punt Webauth\nclass-map match-any system-cpp-police-l2lvx-control\n\
+    \  description L2 LVX control packets\nclass-map match-any system-cpp-police-forus\n\
+    \  description Forus Address resolution and Forus traffic\nclass-map match-any\
+    \ system-cpp-police-multicast-end-station\n  description MCAST END STATION\nclass-map\
+    \ match-any system-cpp-police-multicast\n  description Transit Traffic and MCAST\
+    \ Data\nclass-map match-any system-cpp-police-l2-control\n  description L2 control\n\
+    class-map match-any system-cpp-police-dot1x-auth\n  description DOT1X Auth\nclass-map\
+    \ match-any system-cpp-police-data\n  description ICMP redirect, ICMP_GEN and\
+    \ BROADCAST\nclass-map match-any system-cpp-police-stackwise-virt-control\n  description\
+    \ Stackwise Virtual\nclass-map match-any non-client-nrt-class\nclass-map match-any\
+    \ system-cpp-police-routing-control\n  description Routing control and Low Latency\n\
+    class-map match-any system-cpp-police-protocol-snooping\n  description Protocol\
+    \ snooping\nclass-map match-any system-cpp-police-dhcp-snooping\n  description\
+    \ DHCP snooping\nclass-map match-any system-cpp-police-system-critical\n  description\
+    \ System Critical and Gold Pkt\n!\npolicy-map system-cpp-policy\n!\n! \n!\n!\n\
+    !\n!\n!\n!\n!\n!\n!\ninterface Loopback0\n ip address 192.168.60.205 255.255.255.255\n\
+    !\ninterface GigabitEthernet0/0\n description Connection to cloud0\n vrf forwarding\
+    \ Mgmt-vrf\n ip address dhcp\n negotiation auto\n!\ninterface GigabitEthernet1/0/1\n\
+    \ description p2p connection\n!\ninterface GigabitEthernet1/0/2\n!\ninterface\
+    \ GigabitEthernet1/0/3\n!\ninterface GigabitEthernet1/0/4\n!\ninterface GigabitEthernet1/0/5\n\
+    !\ninterface GigabitEthernet1/0/6\n!\ninterface GigabitEthernet1/0/7\n!\ninterface\
+    \ GigabitEthernet1/0/8\n!\ninterface Vlan1\n no ip address\n shutdown\n!\nip forward-protocol\
+    \ nd\nip tcp mss 1280\nip tcp window-size 212000\nip http server\nip http authentication\
+    \ local\nip http secure-server\nip ssh bulk-mode 131072\n!\n!\n!\n!\ncontrol-plane\n\
+    \ service-policy input system-cpp-policy\n!\n!\nline con 0\n stopbits 1\nline\
+    \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
+    \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
+  output: |-
+    configure terminal
+    Enter configuration commands, one per line.  End with CNTL/Z.
+    r1(config)#interface loopback 0
+    r1(config-if)#    ip address 192.168.60.205 255.255.255.255
+    r1(config-if)#end
+    r1#
+r2:
+  original_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n\
+    !\n! Last configuration change at 00:49:56 UTC Fri Jun 13 2025 by nauto\n!\nversion\
+    \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
+    \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r2\n!\n!\nvrf\
+    \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
+    \ ipv6\n exit-address-family\n!\nno aaa new-model\nswitch 1 provision c9kv-uadp-8p\n\
+    !\n!\n!\n!\n!\nip domain name dantelab.local\n!\n!\n!\nlogin on-success log\n\
+    vtp version 1\n!\n!\n!\n!\n!\n!\ncrypto pki trustpoint SLA-TrustPoint\n enrollment\
+    \ pkcs12\n revocation-check crl\n hash sha256\n!\ncrypto pki trustpoint TP-self-signed-1276201454\n\
+    \ enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-1276201454\n\
+    \ revocation-check none\n rsakeypair TP-self-signed-1276201454\n hash sha256\n\
+    !\n!\ncrypto pki certificate chain SLA-TrustPoint\n certificate ca 01\n  30820321\
+    \ 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 \n  32310E30\
+    \ 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 \n  6F204C69\
+    \ 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 \n  3834375A\
+    \ 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 \n  43697363\
+    \ 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 \n  526F6F74\
+    \ 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \n  82010A02\
+    \ 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \n  CBB4C798\
+    \ 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 \n  1C394D78\
+    \ 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE \n  4AA4E80D\
+    \ DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \n  7390A3EB\
+    \ 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 \n  68E69491\
+    \ 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 \n  C7479096\
+    \ B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \n  C55F0D76\
+    \ 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \n  DFC7C6CF\
+    \ 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \n  06300F06\
+    \ 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 \n  4B3D31E5\
+    \ 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \n  03820101\
+    \ 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 \n  604EDCDE\
+    \ FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B \n  D98987BF\
+    \ E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 \n  467A3DF4\
+    \ 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \n  7CA7B7E6\
+    \ C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \n  5FB0DA06\
+    \ B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \n  80DDCD16\
+    \ D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \n  418616A9\
+    \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 \n  D697DF7F\
+    \ 28\n  \tquit\ncrypto pki certificate chain TP-self-signed-1276201454\n certificate\
+    \ self-signed 01\n  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
+    \ 0B050030 \n  31312F30 2D060355 04030C26 494F532D 53656C66 2D536967 6E65642D\
+    \ 43657274 \n  69666963 6174652D 31323736 32303134 3534301E 170D3235 30363131\
+    \ 30313032 \n  33395A17 0D333530 36313130 31303233 395A3031 312F302D 06035504\
+    \ 030C2649 \n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31\
+    \ 32373632 \n  30313435 34308201 22300D06 092A8648 86F70D01 01010500 0382010F\
+    \ 00308201 \n  0A028201 0100A270 83BDFDEA D8156DC8 524AB324 391B5B73 84872E6C\
+    \ 51FFE7DC \n  2F38464F 315FB6FB 7AB325FC CB9BBFF7 E87D9326 2019E7C5 183C2EDE\
+    \ 1418C536 \n  A8477BF9 3EBC3F75 B87ED30D 6971627A 5C88D7DB CB2592DE 26E8B58B\
+    \ BCDBEC23 \n  B67DE73F E7DC6B4D 5014C541 48F95EFD 5AA88CEF 14FBE969 AC6684F5\
+    \ 639ECDE1 \n  8A257243 8C5BC38A BBA2C2AF E131F9DA 0299940C 54B4AC2E 6590DAEB\
+    \ 8BC293C8 \n  A70F0457 2F139426 4763E7A1 3D75B119 855C8010 13C50CE7 006DDC84\
+    \ D8A6F0D6 \n  24DE11DF 17EDE4A0 939B12EA 0CE48662 74C2E513 597F4237 F5CCC102\
+    \ 0A631B21 \n  A4B73F3B 78C6E357 F14030D5 2551A84D 77612AB5 59450ECF A34C5023\
+    \ 362BC221 \n  1AB83843 307B0203 010001A3 53305130 1D060355 1D0E0416 04148A5F\
+    \ CC95FA90 \n  F196C665 D5312945 A32404F4 C982301F 0603551D 23041830 1680148A\
+    \ 5FCC95FA \n  90F196C6 65D53129 45A32404 F4C98230 0F060355 1D130101 FF040530\
+    \ 030101FF \n  300D0609 2A864886 F70D0101 0B050003 82010100 8A89DFF8 C18EAF7B\
+    \ D7D3C04F \n  2B4ECC67 67A7DECA E4B9A5CE 623D1329 56035D9A 745C1D69 59F81122\
+    \ 74BDBBB8 \n  867FC06A E9D0C3E4 66DA8665 9F9D32F9 737DC975 FA5AD750 D678428C\
+    \ 1821C1A2 \n  F2FE27BE 2ADE7593 47947701 1CCBA3E1 EC1BCB3D 5D8D56D7 299374C5\
+    \ 6D300270 \n  E9FD3DE3 2B8019DD 12302D81 B63C7FF3 5AC9E78B E887DECF E1D2C652\
+    \ 7A1FB191 \n  CE4932E2 05E8EF2B E6112634 CEB37C6C 0B05311A 65263811 FDB085DE\
+    \ F7A00D2E \n  7131E497 4E6C865A 38C8552D 38624B2B 94D30746 8F1CC515 C87C1AA9\
+    \ 63347E86 \n  60930CC2 F9D220C8 B7FE663E EC2D8320 E67E40CC D9A35DAF 07AAD4E7\
+    \ F4AF1753 \n  6816FCC9 C507F672 EA41E61C BBFE075B 8A767FB9\n  \tquit\n!\nmemory\
+    \ free low-watermark processor 74862\n!\ndiagnostic bootup level minimal\n!\n\
+    spanning-tree mode rapid-pvst\nspanning-tree extend system-id\n!\n!\n!\nusername\
+    \ admin privilege 15 secret 9 $9$I.2IThIhT2t4E.$3bC4LhLVXVsiUG7oH1lWKXS1d7LG4m/hrvZLqu78N3s\n\
+    username nauto privilege 15 secret 9 $9$mRlVIIgBNmF8RU$2/Yw3g2IY2cWunsvRJl8ueKOyniyLK7Os6GYGuHMzKM\n\
+    !\nredundancy\n mode sso\n!\n!\n!\n!\n!\n!\nclass-map match-any system-cpp-police-topology-control\n\
+    \  description Topology control\nclass-map match-any system-cpp-police-sw-forward\n\
+    \  description Sw forwarding, L2 LVX data, LOGGING\nclass-map match-any system-cpp-default\n\
+    \  description EWLC control, EWLC data, Inter FED \nclass-map match-any system-cpp-police-sys-data\n\
+    \  description Learning cache ovfl, High Rate App, Exception, EGR Exception, NFL\
+    \ SAMPLED DATA, RPF Failed\nclass-map match-any system-cpp-police-punt-webauth\n\
+    \  description Punt Webauth\nclass-map match-any system-cpp-police-l2lvx-control\n\
+    \  description L2 LVX control packets\nclass-map match-any system-cpp-police-forus\n\
+    \  description Forus Address resolution and Forus traffic\nclass-map match-any\
+    \ system-cpp-police-multicast-end-station\n  description MCAST END STATION\nclass-map\
+    \ match-any system-cpp-police-multicast\n  description Transit Traffic and MCAST\
+    \ Data\nclass-map match-any system-cpp-police-l2-control\n  description L2 control\n\
+    class-map match-any system-cpp-police-dot1x-auth\n  description DOT1X Auth\nclass-map\
+    \ match-any system-cpp-police-data\n  description ICMP redirect, ICMP_GEN and\
+    \ BROADCAST\nclass-map match-any system-cpp-police-stackwise-virt-control\n  description\
+    \ Stackwise Virtual\nclass-map match-any non-client-nrt-class\nclass-map match-any\
+    \ system-cpp-police-routing-control\n  description Routing control and Low Latency\n\
+    class-map match-any system-cpp-police-protocol-snooping\n  description Protocol\
+    \ snooping\nclass-map match-any system-cpp-police-dhcp-snooping\n  description\
+    \ DHCP snooping\nclass-map match-any system-cpp-police-system-critical\n  description\
+    \ System Critical and Gold Pkt\n!\npolicy-map system-cpp-policy\n!\n! \n!\n!\n\
+    !\n!\n!\n!\n!\n!\n!\ninterface Loopback0\n ip address 192.168.60.206 255.255.255.255\n\
+    !\ninterface GigabitEthernet0/0\n description Connection to cloud0\n vrf forwarding\
+    \ Mgmt-vrf\n ip address dhcp\n negotiation auto\n!\ninterface GigabitEthernet1/0/1\n\
+    \ description p2p connection\n!\ninterface GigabitEthernet1/0/2\n!\ninterface\
+    \ GigabitEthernet1/0/3\n!\ninterface GigabitEthernet1/0/4\n!\ninterface GigabitEthernet1/0/5\n\
+    !\ninterface GigabitEthernet1/0/6\n!\ninterface GigabitEthernet1/0/7\n!\ninterface\
+    \ GigabitEthernet1/0/8\n!\ninterface Vlan1\n no ip address\n shutdown\n!\nip forward-protocol\
+    \ nd\nip tcp mss 1280\nip tcp window-size 212000\nip http server\nip http authentication\
+    \ local\nip http secure-server\nip ssh bulk-mode 131072\n!\n!\n!\n!\ncontrol-plane\n\
+    \ service-policy input system-cpp-policy\n!\n!\nline con 0\n stopbits 1\nline\
+    \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
+    \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
+  new_config: "Building configuration...\n\nCurrent configuration : 7684 bytes\n!\n\
+    ! Last configuration change at 00:50:36 UTC Fri Jun 13 2025 by nauto\n!\nversion\
+    \ 17.12\nservice timestamps debug datetime msec\nservice timestamps log datetime\
+    \ msec\nplatform punt-keepalive disable-kernel-core\n!\nhostname r2\n!\n!\nvrf\
+    \ definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family\
+    \ ipv6\n exit-address-family\n!\nno aaa new-model\nswitch 1 provision c9kv-uadp-8p\n\
+    !\n!\n!\n!\n!\nip domain name dantelab.local\n!\n!\n!\nlogin on-success log\n\
+    vtp version 1\n!\n!\n!\n!\n!\n!\ncrypto pki trustpoint SLA-TrustPoint\n enrollment\
+    \ pkcs12\n revocation-check crl\n hash sha256\n!\ncrypto pki trustpoint TP-self-signed-1276201454\n\
+    \ enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-1276201454\n\
+    \ revocation-check none\n rsakeypair TP-self-signed-1276201454\n hash sha256\n\
+    !\n!\ncrypto pki certificate chain SLA-TrustPoint\n certificate ca 01\n  30820321\
+    \ 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 \n  32310E30\
+    \ 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 \n  6F204C69\
+    \ 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 \n  3834375A\
+    \ 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 \n  43697363\
+    \ 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 \n  526F6F74\
+    \ 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \n  82010A02\
+    \ 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \n  CBB4C798\
+    \ 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 \n  1C394D78\
+    \ 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE \n  4AA4E80D\
+    \ DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \n  7390A3EB\
+    \ 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 \n  68E69491\
+    \ 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 \n  C7479096\
+    \ B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \n  C55F0D76\
+    \ 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \n  DFC7C6CF\
+    \ 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \n  06300F06\
+    \ 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 \n  4B3D31E5\
+    \ 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \n  03820101\
+    \ 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 \n  604EDCDE\
+    \ FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B \n  D98987BF\
+    \ E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 \n  467A3DF4\
+    \ 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \n  7CA7B7E6\
+    \ C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \n  5FB0DA06\
+    \ B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \n  80DDCD16\
+    \ D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \n  418616A9\
+    \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 \n  D697DF7F\
+    \ 28\n  \tquit\ncrypto pki certificate chain TP-self-signed-1276201454\n certificate\
+    \ self-signed 01\n  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
+    \ 0B050030 \n  31312F30 2D060355 04030C26 494F532D 53656C66 2D536967 6E65642D\
+    \ 43657274 \n  69666963 6174652D 31323736 32303134 3534301E 170D3235 30363131\
+    \ 30313032 \n  33395A17 0D333530 36313130 31303233 395A3031 312F302D 06035504\
+    \ 030C2649 \n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31\
+    \ 32373632 \n  30313435 34308201 22300D06 092A8648 86F70D01 01010500 0382010F\
+    \ 00308201 \n  0A028201 0100A270 83BDFDEA D8156DC8 524AB324 391B5B73 84872E6C\
+    \ 51FFE7DC \n  2F38464F 315FB6FB 7AB325FC CB9BBFF7 E87D9326 2019E7C5 183C2EDE\
+    \ 1418C536 \n  A8477BF9 3EBC3F75 B87ED30D 6971627A 5C88D7DB CB2592DE 26E8B58B\
+    \ BCDBEC23 \n  B67DE73F E7DC6B4D 5014C541 48F95EFD 5AA88CEF 14FBE969 AC6684F5\
+    \ 639ECDE1 \n  8A257243 8C5BC38A BBA2C2AF E131F9DA 0299940C 54B4AC2E 6590DAEB\
+    \ 8BC293C8 \n  A70F0457 2F139426 4763E7A1 3D75B119 855C8010 13C50CE7 006DDC84\
+    \ D8A6F0D6 \n  24DE11DF 17EDE4A0 939B12EA 0CE48662 74C2E513 597F4237 F5CCC102\
+    \ 0A631B21 \n  A4B73F3B 78C6E357 F14030D5 2551A84D 77612AB5 59450ECF A34C5023\
+    \ 362BC221 \n  1AB83843 307B0203 010001A3 53305130 1D060355 1D0E0416 04148A5F\
+    \ CC95FA90 \n  F196C665 D5312945 A32404F4 C982301F 0603551D 23041830 1680148A\
+    \ 5FCC95FA \n  90F196C6 65D53129 45A32404 F4C98230 0F060355 1D130101 FF040530\
+    \ 030101FF \n  300D0609 2A864886 F70D0101 0B050003 82010100 8A89DFF8 C18EAF7B\
+    \ D7D3C04F \n  2B4ECC67 67A7DECA E4B9A5CE 623D1329 56035D9A 745C1D69 59F81122\
+    \ 74BDBBB8 \n  867FC06A E9D0C3E4 66DA8665 9F9D32F9 737DC975 FA5AD750 D678428C\
+    \ 1821C1A2 \n  F2FE27BE 2ADE7593 47947701 1CCBA3E1 EC1BCB3D 5D8D56D7 299374C5\
+    \ 6D300270 \n  E9FD3DE3 2B8019DD 12302D81 B63C7FF3 5AC9E78B E887DECF E1D2C652\
+    \ 7A1FB191 \n  CE4932E2 05E8EF2B E6112634 CEB37C6C 0B05311A 65263811 FDB085DE\
+    \ F7A00D2E \n  7131E497 4E6C865A 38C8552D 38624B2B 94D30746 8F1CC515 C87C1AA9\
+    \ 63347E86 \n  60930CC2 F9D220C8 B7FE663E EC2D8320 E67E40CC D9A35DAF 07AAD4E7\
+    \ F4AF1753 \n  6816FCC9 C507F672 EA41E61C BBFE075B 8A767FB9\n  \tquit\n!\nmemory\
+    \ free low-watermark processor 74862\n!\ndiagnostic bootup level minimal\n!\n\
+    spanning-tree mode rapid-pvst\nspanning-tree extend system-id\n!\n!\n!\nusername\
+    \ admin privilege 15 secret 9 $9$I.2IThIhT2t4E.$3bC4LhLVXVsiUG7oH1lWKXS1d7LG4m/hrvZLqu78N3s\n\
+    username nauto privilege 15 secret 9 $9$mRlVIIgBNmF8RU$2/Yw3g2IY2cWunsvRJl8ueKOyniyLK7Os6GYGuHMzKM\n\
+    !\nredundancy\n mode sso\n!\n!\n!\n!\n!\n!\nclass-map match-any system-cpp-police-topology-control\n\
+    \  description Topology control\nclass-map match-any system-cpp-police-sw-forward\n\
+    \  description Sw forwarding, L2 LVX data, LOGGING\nclass-map match-any system-cpp-default\n\
+    \  description EWLC control, EWLC data, Inter FED \nclass-map match-any system-cpp-police-sys-data\n\
+    \  description Learning cache ovfl, High Rate App, Exception, EGR Exception, NFL\
+    \ SAMPLED DATA, RPF Failed\nclass-map match-any system-cpp-police-punt-webauth\n\
+    \  description Punt Webauth\nclass-map match-any system-cpp-police-l2lvx-control\n\
+    \  description L2 LVX control packets\nclass-map match-any system-cpp-police-forus\n\
+    \  description Forus Address resolution and Forus traffic\nclass-map match-any\
+    \ system-cpp-police-multicast-end-station\n  description MCAST END STATION\nclass-map\
+    \ match-any system-cpp-police-multicast\n  description Transit Traffic and MCAST\
+    \ Data\nclass-map match-any system-cpp-police-l2-control\n  description L2 control\n\
+    class-map match-any system-cpp-police-dot1x-auth\n  description DOT1X Auth\nclass-map\
+    \ match-any system-cpp-police-data\n  description ICMP redirect, ICMP_GEN and\
+    \ BROADCAST\nclass-map match-any system-cpp-police-stackwise-virt-control\n  description\
+    \ Stackwise Virtual\nclass-map match-any non-client-nrt-class\nclass-map match-any\
+    \ system-cpp-police-routing-control\n  description Routing control and Low Latency\n\
+    class-map match-any system-cpp-police-protocol-snooping\n  description Protocol\
+    \ snooping\nclass-map match-any system-cpp-police-dhcp-snooping\n  description\
+    \ DHCP snooping\nclass-map match-any system-cpp-police-system-critical\n  description\
+    \ System Critical and Gold Pkt\n!\npolicy-map system-cpp-policy\n!\n! \n!\n!\n\
+    !\n!\n!\n!\n!\n!\n!\ninterface Loopback0\n ip address 192.168.60.206 255.255.255.255\n\
+    !\ninterface GigabitEthernet0/0\n description Connection to cloud0\n vrf forwarding\
+    \ Mgmt-vrf\n ip address dhcp\n negotiation auto\n!\ninterface GigabitEthernet1/0/1\n\
+    \ description p2p connection\n!\ninterface GigabitEthernet1/0/2\n!\ninterface\
+    \ GigabitEthernet1/0/3\n!\ninterface GigabitEthernet1/0/4\n!\ninterface GigabitEthernet1/0/5\n\
+    !\ninterface GigabitEthernet1/0/6\n!\ninterface GigabitEthernet1/0/7\n!\ninterface\
+    \ GigabitEthernet1/0/8\n!\ninterface Vlan1\n no ip address\n shutdown\n!\nip forward-protocol\
+    \ nd\nip tcp mss 1280\nip tcp window-size 212000\nip http server\nip http authentication\
+    \ local\nip http secure-server\nip ssh bulk-mode 131072\n!\n!\n!\n!\ncontrol-plane\n\
+    \ service-policy input system-cpp-policy\n!\n!\nline con 0\n stopbits 1\nline\
+    \ vty 0 4\n login local\n transport input ssh\nline vty 5 15\n login\n transport\
+    \ input ssh\n!\n!\n!\n!\n!\n!\nend\n"
+  output: |-
+    configure terminal
+    Enter configuration commands, one per line.  End with CNTL/Z.
+    r2(config)#interface loopback 0
+    r2(config-if)#    ip address 192.168.60.206 255.255.255.255
+    r2(config-if)#end
+    r2#

@@ -115,7 +115,13 @@ def main():
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"./output/output-{timestamp}.txt"
     with open(filename, "w") as f:
-        yaml.dump(OUTPUTS, f)
+        for device, output in OUTPUTS.items():
+            f.write(f"{device}:\n")
+            for section, content in output.items():
+                f.write(f"  {section}:\n")
+                for line in content.strip().splitlines():
+                    f.write(f"    {line}\n")
+            f.write("\n")
 
 if __name__ == "__main__":
     main()

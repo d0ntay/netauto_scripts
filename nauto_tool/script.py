@@ -4,6 +4,8 @@ from netmiko import ConnectHandler
 import getpass
 import sys
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 # only supports one account so make sure all devices have this user on them
 
@@ -31,26 +33,35 @@ def loader(data):
         trim_blocks=True,
         lstrip_blocks=True,
     )
-    for device in data['devices']:
-        try:
-            if device["device_type"] not in TEMPLATE_MAP:
-                print(f"Skipping {device["name"]}, device type not supported : {device["device_type"]}")
+
+    with ThreadPoolExecutor(max_workers=7) as executor:
+        futures = []
+        for device in data['devices']:
+            if device.get("device_type") not in TEMPLATE_MAP:
+                print(f"Skipping {device.get('name')}, unsupported device type: {device.get('device_type')}")
                 continue
+
             template_name = TEMPLATE_MAP[device["device_type"]]
             template = env.get_template(template_name)
             rendered = template.render(device=device)
             config_lines = rendered.strip().splitlines()
-            net_connect(
+
+            futures.append(executor.submit(
+                net_connect,
                 config_lines,
-                device_type = device["device_type"],
-                device_host = device["host"],
-                device_name = device["name"],
-                device_username = USERNAME,
-                device_password = PASSWORD,
-            )           
-                    
-        except Exception as e:
-            print(f"Error on {device["name"]} | {device["host"]} : {e}")
+                device_type=device["device_type"],
+                device_host=device["host"],
+                device_name=device["name"],
+                device_username=USERNAME,
+                device_password=PASSWORD,
+            ))
+
+        for future in as_completed(futures):
+            try:
+                future.result()
+            except Exception as e:
+                print(f"Error during threaded execution: {e}")
+
 
 # Command runner for juniper
 

@@ -15,8 +15,8 @@ PASSWORD = getpass.getpass()
 # update template map with more tempplates when a new vendor is needed
 #
 # Currently supported vendors:
-#   - Cisco
-#   - Juniper
+#   Cisco
+#   Juniper
 
 TEMPLATE_MAP = {
     "juniper": "juniper_config.j2",
@@ -60,7 +60,7 @@ def loader(data):
             try:
                 future.result()
             except Exception as e:
-                print(f"Error during threaded execution: {e}")
+                print(f"thread error: {e}")
 
 
 # Command runner for juniper

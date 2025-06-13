@@ -27,6 +27,7 @@ OUTPUTS = {}
 
 # logic for loading environment and templates (jinja stuff)
 
+
 def loader(data):
     env = Environment(
         loader=FileSystemLoader("./templates"),
@@ -36,9 +37,11 @@ def loader(data):
 
     with ThreadPoolExecutor(max_workers=7) as executor:
         futures = []
-        for device in data['devices']:
+        for device in data["devices"]:
             if device.get("device_type") not in TEMPLATE_MAP:
-                print(f"Skipping {device.get('name')}, unsupported device type: {device.get('device_type')}")
+                print(
+                    f"Skipping {device.get('name')}, unsupported device type: {device.get('device_type')}"
+                )
                 continue
 
             template_name = TEMPLATE_MAP[device["device_type"]]
@@ -46,15 +49,17 @@ def loader(data):
             rendered = template.render(device=device)
             config_lines = rendered.strip().splitlines()
 
-            futures.append(executor.submit(
-                net_connect,
-                config_lines,
-                device_type=device["device_type"],
-                device_host=device["host"],
-                device_name=device["name"],
-                device_username=USERNAME,
-                device_password=PASSWORD,
-            ))
+            futures.append(
+                executor.submit(
+                    net_connect,
+                    config_lines,
+                    device_type=device["device_type"],
+                    device_host=device["host"],
+                    device_name=device["name"],
+                    device_username=USERNAME,
+                    device_password=PASSWORD,
+                )
+            )
 
         for future in as_completed(futures):
             try:
@@ -65,7 +70,8 @@ def loader(data):
 
 # Command runner for juniper
 
-def juniper_device(device_name ,conn, config_lines):
+
+def juniper_device(device_name, conn, config_lines):
     pre_conf = conn.send_command("show configuration")
     output = conn.send_config_set(config_lines)
     conn.commit()
@@ -75,9 +81,11 @@ def juniper_device(device_name ,conn, config_lines):
     generate_output(device_name, pre_conf, post_conf, output)
     print(f"Finished {device_name}")
 
+
 # Command runner for cisco
 
-def cisco_device(device_name, conn, config_lines): 
+
+def cisco_device(device_name, conn, config_lines):
     conn.enable()
     pre_conf = conn.send_command("show run")
     output = conn.send_config_set(config_lines)
@@ -88,16 +96,20 @@ def cisco_device(device_name, conn, config_lines):
     generate_output(device_name, pre_conf, post_conf, output)
     print(f"Finished {device_name}")
 
+
 # Appends OUTPUTS map with data received from each device
+
 
 def generate_output(device_name, pre_conf, post_conf, output):
     OUTPUTS[device_name] = {
-        "original_config" : pre_conf,
-        "new_config" : post_conf,
-        "output" : output,       
+        "original_config": pre_conf,
+        "new_config": post_conf,
+        "output": output,
     }
 
+
 # Creates the output file with the contents of the OUTPUTS map
+
 
 def create_output():
     now = datetime.now()
@@ -112,36 +124,49 @@ def create_output():
                     f.write(f"    {line}\n")
             f.write("\n")
 
+
 # Netmiko logic for ssh connection to device
 
-def net_connect(config_lines, device_type, device_host, device_name, device_username, device_password):
+
+def net_connect(
+    config_lines,
+    device_type,
+    device_host,
+    device_name,
+    device_username,
+    device_password,
+):
     conn = ConnectHandler(
-        device_type = device_type,
-        host = device_host,
-        username = device_username,
-        password = device_password,
+        device_type=device_type,
+        host=device_host,
+        username=device_username,
+        password=device_password,
     )
     if device_type == "juniper":
         juniper_device(device_name, conn, config_lines)
     elif device_type == "cisco_ios":
         cisco_device(device_name, conn, config_lines)
 
-# Dry run feature for testing output of config before running on a live device. 
+
+# Dry run feature for testing output of config before running on a live device.
 #
-# need to use --dry_run argument 
+# need to use --dry_run argument
 #
 # example of how to use...    python script.py --dry_run
 
+
 def dry_run(data):
     env = Environment(
-            loader=FileSystemLoader("./templates"),
-            trim_blocks=True,
-            lstrip_blocks=True,
-        )
-    for device in data['devices']:
+        loader=FileSystemLoader("./templates"),
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    for device in data["devices"]:
         try:
             if device["device_type"] not in TEMPLATE_MAP:
-                print(f"Skipping {device["name"]}, device type not supported : {device["device_type"]}")
+                print(
+                    f"Skipping {device["name"]}, device type not supported : {device["device_type"]}"
+                )
                 continue
             template_name = TEMPLATE_MAP[device["device_type"]]
             template = env.get_template(template_name)
@@ -153,6 +178,7 @@ def dry_run(data):
             print(e)
     sys.exit()
 
+
 def main():
     with open("./inventory/devices.yaml", "r") as f:
         data = yaml.safe_load(f)
@@ -161,6 +187,7 @@ def main():
             dry_run(data)
     loader(data)
     create_output()
+
 
 if __name__ == "__main__":
     main()

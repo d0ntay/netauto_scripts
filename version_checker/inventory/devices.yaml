@@ -1,0 +1,29 @@
+devices:
+  - name: OOB-01
+    host: 192.168.60.182
+    device_type: juniper
+    loopback: 192.168.60.200
+  - name: OOB-02
+    host: 192.168.60.183
+    device_type: juniper
+    loopback: 192.168.60.201
+  - name: OOB-03
+    host: 192.168.60.184
+    device_type: juniper
+    loopback: 192.168.60.202
+  - name: OOB-04
+    host: 192.168.60.185
+    device_type: juniper
+    loopback: 192.168.60.203
+  - name: OOB-05
+    host: 192.168.60.186
+    device_type: juniper
+    loopback: 192.168.60.204
+  - name: r1
+    host: 192.168.60.170
+    device_type: cisco_ios
+    loopback: 192.168.60.205
+  - name: r2
+    host: 192.168.60.171
+    device_type: cisco_ios
+    loopback: 192.168.60.206
